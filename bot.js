@@ -13,6 +13,7 @@ app.use(express.json());
 // Обработка вебхуков
 app.post("/", (req, res) => {
   const { body } = req;
+  console.log("Received update U*,*U:", body); // Логируем входящее обновление
   bot.processUpdate(body); // Передаем обновление боту
   res.status(200).send("OK");
 });
