@@ -1,10 +1,21 @@
+const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
 
-// Замените на ваш токен
+const app = express();
 const token = "7325976583:AAFKB5X3o56RZg45N93JRGRHnWYEVJ3dRBo";
 
 // Создаем экземпляр бота
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
+
+// Middleware для обработки JSON
+app.use(express.json());
+
+// Обработка вебхуков
+app.post("/", (req, res) => {
+  const { body } = req;
+  bot.processUpdate(body); // Передаем обновление боту
+  res.status(200).send("OK");
+});
 
 // Команда /start
 bot.onText(/\/start/, (msg) => {
@@ -113,5 +124,8 @@ bot.onText(/\/contacts/, (msg) => {
   });
 });
 
-// Запуск бота
-console.log("bot on duty ...");
+// Запуск сервера
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Bot is running on port ${PORT}...`);
+});
