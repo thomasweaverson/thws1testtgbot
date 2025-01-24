@@ -37,7 +37,7 @@ bot.onText(/\/start/, (msg) => {
     inline_keyboard: [
       [
         {
-          text: "🚀 Открыть Mini App", // Текст на кнопке
+          text: "🐾Open Mini App🐾", // Текст на кнопке
           web_app: { url: "https://thws1testtma.vercel.app/" }, // Ссылка на ваш Mini App
         },
       ],
