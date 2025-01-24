@@ -17,11 +17,13 @@ app.post("/", (req, res) => {
   const { body } = req;
   console.log("Received update U*,*U:", body); // Логируем входящее обновление
   bot.processUpdate(body); // Передаем обновление боту
+  console.log("Update processed"); // Логируем успешную обработку
   res.status(200).send("OK");
 });
 
 // Команда /start
 bot.onText(/\/start/, (msg) => {
+  console.log("/start command received");
   const chatId = msg.chat.id;
 
   // Текст сообщения
@@ -43,13 +45,21 @@ bot.onText(/\/start/, (msg) => {
   };
 
   // Отправляем сообщение с кнопкой
-  bot.sendMessage(chatId, text, {
-    reply_markup: JSON.stringify(keyboard),
-  });
+  bot
+    .sendMessage(chatId, text, {
+      reply_markup: JSON.stringify(keyboard),
+    })
+    .then(() => {
+      console.log("Message sent successfully");
+    })
+    .catch((error) => {
+      console.error("Error sending message:", error);
+    });
 });
 
 // Команда /help
 bot.onText(/\/help/, (msg) => {
+  console.log("/help command received");
   const chatId = msg.chat.id;
   const text = `
       📖 **Bot Help**
@@ -62,11 +72,19 @@ bot.onText(/\/help/, (msg) => {
   `;
 
   // Отправляем сообщение
-  bot.sendMessage(chatId, text, { parse_mode: "Markdown" });
+  bot
+    .sendMessage(chatId, text, { parse_mode: "Markdown" })
+    .then(() => {
+      console.log("Message sent successfully");
+    })
+    .catch((error) => {
+      console.error("Error sending message:", error);
+    });
 });
 
 // Команда /about
 bot.onText(/\/about/, (msg) => {
+  console.log("/about command received");
   const chatId = msg.chat.id;
 
   // Текст сообщения
@@ -88,13 +106,21 @@ bot.onText(/\/about/, (msg) => {
   `;
 
   // Отправляем сообщение с кнопкой
-  bot.sendMessage(chatId, text, {
-    parse_mode: "Markdown", // Разрешаем Markdown
-  });
+  bot
+    .sendMessage(chatId, text, {
+      parse_mode: "Markdown", // Разрешаем Markdown
+    })
+    .then(() => {
+      console.log("Message sent successfully");
+    })
+    .catch((error) => {
+      console.error("Error sending message:", error);
+    });
 });
 
 // Команда /contacts
 bot.onText(/\/contacts/, (msg) => {
+  console.log("/contacts command received");
   const chatId = msg.chat.id;
 
   // Текст сообщения
@@ -122,9 +148,16 @@ bot.onText(/\/contacts/, (msg) => {
   `;
 
   // Отправляем сообщение
-  bot.sendMessage(chatId, text, {
-    parse_mode: "Markdown", // Разрешаем Markdown
-  });
+  bot
+    .sendMessage(chatId, text, {
+      parse_mode: "Markdown", // Разрешаем Markdown
+    })
+    .then(() => {
+      console.log("Message sent successfully");
+    })
+    .catch((error) => {
+      console.error("Error sending message:", error);
+    });
 });
 
 // Запуск сервера
