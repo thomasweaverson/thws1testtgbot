@@ -27,10 +27,7 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
 
   // Текст сообщения
-  const text = `
-    ฅ^•ﻌ•^ฅ
-    Meow on the button to launch the application🐾
-  `;
+  const text = `ฅ^•ﻌ•^ฅ\nMeow on the button to launch the application🐾`;
 
   // Кнопка для открытия Mini App
   const keyboard = {
