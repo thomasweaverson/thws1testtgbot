@@ -15,146 +15,53 @@ app.use(express.json());
 // Обработка вебхуков
 app.post("/", (req, res) => {
   const { body } = req;
-  console.log("Received update U*,*U:", body); // Логируем входящее обновление
-  bot.processUpdate(body); // Передаем обновление боту
-  console.log("Update processed"); // Логируем успешную обработку
+  bot.processUpdate(body);
   res.status(200).send("OK");
 });
 
-// Команда /start
+// Команда /start с inline keyboard
 bot.onText(/\/start/, (msg) => {
-  console.log("/start command received");
   const chatId = msg.chat.id;
 
-  // Текст сообщения
-  const text = `ฅ^•ﻌ•^ฅ\nMeow on the button to launch the application🐾`;
+  const text = "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0438\u0437 \u0441\u043f\u0438\u0441\u043a\u0430 \u043d\u0438\u0436\u0435:";
 
-  // Кнопка для открытия Mini App
   const keyboard = {
     inline_keyboard: [
-      [
-        {
-          text: "🐾Open Mini App🐾", // Текст на кнопке
-          web_app: { url: "https://thws1testtma.vercel.app/" }, // Ссылка на ваш Mini App
-        },
-      ],
+      [{ text: "\uD83D\uDC41 About", callback_data: "about" }],
+      [{ text: "\uD83D\uDCD6 Help", callback_data: "help" }],
+      [{ text: "\u260E\uFE0F Contacts", callback_data: "contacts" }],
     ],
   };
 
-  // Отправляем сообщение с кнопкой
-  bot
-    .sendMessage(chatId, text, {
-      reply_markup: JSON.stringify(keyboard),
-    })
-    .then(() => {
-      console.log("Message sent successfully");
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
+  bot.sendMessage(chatId, text, {
+    reply_markup: JSON.stringify(keyboard),
+  });
 });
 
-// Команда /help
-bot.onText(/\/help/, (msg) => {
-  console.log("/help command received");
-  const chatId = msg.chat.id;
-  const text = `
-      📖 **Bot Help**
+// Обработка callback_query от inline keyboard
+bot.on("callback_query", (query) => {
+  const chatId = query.message.chat.id;
+  const data = query.data;
 
-      Here is a list of available commands:
-      ฅ /start - Easy start
-      ฅ /contacts - Contacts
-      ฅ /about - Description
-      ฅ /help - Help
-  `;
-
-  // Отправляем сообщение
-  bot
-    .sendMessage(chatId, text, { parse_mode: "Markdown" })
-    .then(() => {
-      console.log("Message sent successfully");
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
-});
-
-// Команда /about
-bot.onText(/\/about/, (msg) => {
-  console.log("/about command received");
-  const chatId = msg.chat.id;
-
-  // Текст сообщения
-  const text = `
-        🤖 **About the bot**
-
-        This bot is created with paws to:
-
-            ฅ roll a cat
-            ฅ purr
-            ฅ sleep
-            ฅ ask for food
-            ฅ drive out the devil
-
-        💡 **Technologies:**
-        - Backend: Node.js
-        - Frontend: React
-        - Hosting: Vercel
-  `;
-
-  // Отправляем сообщение с кнопкой
-  bot
-    .sendMessage(chatId, text, {
-      parse_mode: "Markdown", // Разрешаем Markdown
-    })
-    .then(() => {
-      console.log("Message sent successfully");
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
-});
-
-// Команда /contacts
-bot.onText(/\/contacts/, (msg) => {
-  console.log("/contacts command received");
-  const chatId = msg.chat.id;
-
-  // Текст сообщения
-  const text = `
-    📞 **Contacts**
-
-    If you have any questions or suggestions, please contact us:  
-
-    📧 *E-mail:*
-    [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)
-
-    📱 *Telegram:*
-    [@vegog](https://t.me/vegog)
-    
-
-    🌐 *Website:*
-    [example-test-not-real.com](https://example.com)
-
-    📱 *Social networks (not real links):*
-    ฅ [Telegram](https://t.me/your_channel)
-    ฅ [Twitter](https://twitter.com/your_profile)
-    ฅ [Instagram](https://instagram.com/your_profile)
-
-    We are always happy to help! 😺
-  `;
-
-  // Отправляем сообщение
-  bot
-    .sendMessage(chatId, text, {
-      parse_mode: "Markdown", // Разрешаем Markdown
-    })
-    .then(() => {
-      console.log("Message sent successfully");
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
+  if (data === "about") {
+    bot.sendMessage(
+      chatId,
+      "\uD83E\uDD16 **About the bot**\n\nThis bot is created with paws to:\n- Roll a cat\n- Purr\n- Sleep\n- Ask for food\n- Drive out the devil",
+      { parse_mode: "Markdown" }
+    );
+  } else if (data === "help") {
+    bot.sendMessage(
+      chatId,
+      "\uD83D\uDCD6 **Help**\n\nHere is a list of available commands:\n- /start - Easy start\n- /contacts - Contacts\n- /about - Description\n- /help - Help",
+      { parse_mode: "Markdown" }
+    );
+  } else if (data === "contacts") {
+    bot.sendMessage(
+      chatId,
+      "\u260E\uFE0F **Contacts**\n\n- Email: [example@example.com](mailto:example@example.com)\n- Telegram: [@vegog](https://t.me/vegog)",
+      { parse_mode: "Markdown" }
+    );
+  }
 });
 
 // Запуск сервера
