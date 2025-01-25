@@ -52,13 +52,13 @@ bot.on("callback_query", (query) => {
   } else if (data === "help") {
     bot.sendMessage(
       chatId,
-      "\uD83D\uDCD6 **Help**\n\nHere is a list of available commands:\n- /start - Easy start\n- /contacts - Contacts\n- /about - Description\n- /help - Help",
+      "\uD83D\uDCD6 **Help**\n\nPush the kitty-button to start the PurrApp",
       { parse_mode: "Markdown" }
     );
   } else if (data === "contacts") {
     bot.sendMessage(
       chatId,
-      "\u260E\uFE0F **Contacts**\n\n- Email: [example@example.com](mailto:example@example.com)\n- Telegram: [@vegog](https://t.me/vegog)",
+      "\u260E\uFE0F **Contacts**\n\n- Email: [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)\n- Telegram: [@vegog](https://t.me/vegog)",
       { parse_mode: "Markdown" }
     );
   }
