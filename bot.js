@@ -31,7 +31,12 @@ bot.onText(/\/start/, (msg) => {
       [{ text: "\uD83D\uDC41 About", callback_data: "about" }],
       [{ text: "\uD83D\uDCD6 Help", callback_data: "help" }],
       [{ text: "\u260E\uFE0F Contacts", callback_data: "contacts" }],
-      [{ text: "🐈 Run Purr App 🐈‍⬛", url: "https://thws1testtma.vercel.app/",}],
+      [
+        {
+          text: "🐈 Run Purr App 🐈‍⬛",
+          web_app: { url: "https://thws1testtma.vercel.app/" },
+        },
+      ],
     ],
   };
 
@@ -82,7 +87,7 @@ bot.on("callback_query", async (query) => {
                 [
                   {
                     text: "🐈 Run Purr App 🐈‍⬛",
-                    url: "https://thws1testtma.vercel.app/",
+                    web_app: { url: "https://thws1testtma.vercel.app/" },
                   },
                 ],
               ],
@@ -110,7 +115,7 @@ bot.on("callback_query", async (query) => {
                 [
                   {
                     text: "🐈 Run Purr App 🐈‍⬛",
-                    url: "https://thws1testtma.vercel.app/",
+                    web_app: { url: "https://thws1testtma.vercel.app/" },
                   },
                 ],
               ],
@@ -141,7 +146,7 @@ bot.on("callback_query", async (query) => {
                 [
                   {
                     text: "🐈 Run Purr App 🐈‍⬛",
-                    url: "https://thws1testtma.vercel.app/",
+                    web_app: { url: "https://thws1testtma.vercel.app/" },
                   },
                 ],
               ],
@@ -168,8 +173,6 @@ bot.on("callback_query", async (query) => {
     });
   }
 });
-
-
 
 // Запуск сервера
 const PORT = process.env.PORT || 3000;
