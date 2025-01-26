@@ -23,7 +23,8 @@ app.post("/", (req, res) => {
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
 
-  const text = "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0438\u0437 \u0441\u043f\u0438\u0441\u043a\u0430 \u043d\u0438\u0436\u0435:";
+  const text =
+    "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0438\u0437 \u0441\u043f\u0438\u0441\u043a\u0430 \u043d\u0438\u0436\u0435:";
 
   const keyboard = {
     inline_keyboard: [
@@ -54,17 +55,17 @@ bot.on("callback_query", async (query) => {
         `
         🤖 **About the bot**
 
-        This bot is created with paws to:
-        ฅ roll a cat
+        This bot was created by paws to:
+        ฅ roll around
         ฅ purr
         ฅ sleep
-        ฅ ask for food
-        ฅ drive out the devil
+        ฅ beg for food
+        ฅ go crazy
 
         💡 **Technologies:**
         - Backend: Node.js
         - Frontend: React
-        - Hosting: Vercel
+        - Hosting: Vercel, Render
         `,
         {
           chat_id: chatId,
@@ -86,12 +87,7 @@ bot.on("callback_query", async (query) => {
       await bot.editMessageText(
         `
         📖 **Bot Help**
-
-        Here is a list of available commands:
-        ฅ /start - Easy start
-        ฅ /contacts - Contacts
-        ฅ /about - Description
-        ฅ /help - Help
+        Just run the app and have purr
         `,
         {
           chat_id: chatId,
@@ -142,7 +138,6 @@ bot.on("callback_query", async (query) => {
   // Уведомляем Telegram о завершении обработки
   bot.answerCallbackQuery(query.id);
 });
-
 
 // Запуск сервера
 const PORT = process.env.PORT || 3000;
