@@ -48,96 +48,108 @@ bot.on("callback_query", async (query) => {
   const chatId = message.chat.id;
   const messageId = message.message_id;
 
-  // Обработчик кнопок
-  switch (data) {
-    case "about":
-      await bot.editMessageText(
-        `
-        🤖 **About the bot**
+  // Проверяем тип нажатой кнопки
+  try {
+    switch (data) {
+      case "about":
+        await bot.editMessageText(
+          `
+          🤖 **About the bot**
 
-        This bot was created by paws to:
-        ฅ roll around
-        ฅ purr
-        ฅ sleep
-        ฅ beg for food
-        ฅ go crazy
+          This bot was created by paws to:
+          ฅ roll around
+          ฅ purr
+          ฅ sleep
+          ฅ beg for food
+          ฅ go crazy
 
-        💡 **Technologies:**
-        - Backend: Node.js
-        - Frontend: React
-        - Hosting: Vercel, Render
-        `,
-        {
-          chat_id: chatId,
-          message_id: messageId,
-          parse_mode: "Markdown",
-          reply_markup: JSON.stringify({
-            inline_keyboard: [
-              [
-                { text: "📖 Help", callback_data: "help" },
-                { text: "📞 Contacts", callback_data: "contacts" },
+          💡 **Technologies:**
+          - Backend: Node.js
+          - Frontend: React
+          - Hosting: Vercel, Render
+          `,
+          {
+            chat_id: chatId,
+            message_id: messageId,
+            parse_mode: "Markdown",
+            reply_markup: JSON.stringify({
+              inline_keyboard: [
+                [
+                  { text: "📖 Help", callback_data: "help" },
+                  { text: "📞 Contacts", callback_data: "contacts" },
+                ],
               ],
-            ],
-          }),
-        }
-      );
-      break;
+            }),
+          }
+        );
+        break;
 
-    case "help":
-      await bot.editMessageText(
-        `
-        📖 **Bot Help**
-        Just run the app and have purr
-        `,
-        {
-          chat_id: chatId,
-          message_id: messageId,
-          parse_mode: "Markdown",
-          reply_markup: JSON.stringify({
-            inline_keyboard: [
-              [
-                { text: "📖 Help", callback_data: "help" },
-                { text: "📞 Contacts", callback_data: "contacts" },
-                { text: "🤖 About", callback_data: "about" },
+      case "help":
+        await bot.editMessageText(
+          `
+          📖 **Bot Help**
+          Just run the app and have purr
+          `,
+          {
+            chat_id: chatId,
+            message_id: messageId,
+            parse_mode: "Markdown",
+            reply_markup: JSON.stringify({
+              inline_keyboard: [
+                [
+                  { text: "📞 Contacts", callback_data: "contacts" },
+                  { text: "🤖 About", callback_data: "about" },
+                ],
               ],
-            ],
-          }),
-        }
-      );
-      break;
+            }),
+          }
+        );
+        break;
 
-    case "contacts":
-      await bot.editMessageText(
-        `
-        📞 **Contacts**
+      case "contacts":
+        await bot.editMessageText(
+          `
+          📞 **Contacts**
 
-        If you have any questions or suggestions, please contact us:  
-        📧 *E-mail:* [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)
-        📱 *Telegram:* [@vegog](https://t.me/vegog)
-        `,
-        {
-          chat_id: chatId,
-          message_id: messageId,
-          parse_mode: "Markdown",
-          reply_markup: JSON.stringify({
-            inline_keyboard: [
-              [
-                { text: "📖 Help", callback_data: "help" },
-                { text: "🤖 About", callback_data: "about" },
+          If you have any questions or suggestions, please contact us:  
+          📧 *E-mail:* [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)
+          📱 *Telegram:* [@vegog](https://t.me/vegog)
+          `,
+          {
+            chat_id: chatId,
+            message_id: messageId,
+            parse_mode: "Markdown",
+            reply_markup: JSON.stringify({
+              inline_keyboard: [
+                [
+                  { text: "📖 Help", callback_data: "help" },
+                  { text: "🤖 About", callback_data: "about" },
+                ],
               ],
-            ],
-          }),
-        }
-      );
-      break;
+            }),
+          }
+        );
+        break;
 
-    default:
-      break;
+      default:
+        await bot.answerCallbackQuery(query.id, {
+          text: "Unknown command!",
+          show_alert: true,
+        });
+        break;
+    }
+
+    // Уведомляем Telegram о завершении обработки
+    await bot.answerCallbackQuery(query.id);
+  } catch (error) {
+    console.error("Error handling callback query:", error);
+    await bot.answerCallbackQuery(query.id, {
+      text: "Oops! Something went wrong.",
+      show_alert: true,
+    });
   }
-
-  // Уведомляем Telegram о завершении обработки
-  bot.answerCallbackQuery(query.id);
 });
+
 
 // Запуск сервера
 const PORT = process.env.PORT || 3000;
