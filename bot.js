@@ -48,8 +48,8 @@ bot.on("callback_query", async (query) => {
   const chatId = message.chat.id;
   const messageId = message.message_id;
 
-  // Проверяем тип нажатой кнопки
   try {
+    // Обработчик кнопок
     switch (data) {
       case "about":
         await bot.editMessageText(
@@ -78,6 +78,12 @@ bot.on("callback_query", async (query) => {
                   { text: "📖 Help", callback_data: "help" },
                   { text: "📞 Contacts", callback_data: "contacts" },
                 ],
+                [
+                  {
+                    text: "🐈 Run Purr App 🐈‍⬛",
+                    url: "https://thws1testtma.vercel.app/",
+                  },
+                ],
               ],
             }),
           }
@@ -99,6 +105,12 @@ bot.on("callback_query", async (query) => {
                 [
                   { text: "📞 Contacts", callback_data: "contacts" },
                   { text: "🤖 About", callback_data: "about" },
+                ],
+                [
+                  {
+                    text: "🐈 Run Purr App 🐈‍⬛",
+                    url: "https://thws1testtma.vercel.app/",
+                  },
                 ],
               ],
             }),
@@ -125,6 +137,12 @@ bot.on("callback_query", async (query) => {
                   { text: "📖 Help", callback_data: "help" },
                   { text: "🤖 About", callback_data: "about" },
                 ],
+                [
+                  {
+                    text: "🐈 Run Purr App 🐈‍⬛",
+                    url: "https://thws1testtma.vercel.app/",
+                  },
+                ],
               ],
             }),
           }
@@ -149,6 +167,7 @@ bot.on("callback_query", async (query) => {
     });
   }
 });
+
 
 
 // Запуск сервера
