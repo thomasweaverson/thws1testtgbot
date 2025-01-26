@@ -39,30 +39,110 @@ bot.onText(/\/start/, (msg) => {
 });
 
 // Обработка callback_query от inline keyboard
-bot.on("callback_query", (query) => {
-  const chatId = query.message.chat.id;
-  const data = query.data;
+bot.on("callback_query", async (query) => {
+  const { data, message } = query;
 
-  if (data === "about") {
-    bot.sendMessage(
-      chatId,
-      "\uD83E\uDD16 **About the bot**\n\nThis bot is created with paws to:\n- Roll a cat\n- Purr\n- Sleep\n- Ask for food\n- Drive out the devil",
-      { parse_mode: "Markdown" }
-    );
-  } else if (data === "help") {
-    bot.sendMessage(
-      chatId,
-      "\uD83D\uDCD6 **Help**\n\nPush the kitty-button to start the PurrApp",
-      { parse_mode: "Markdown" }
-    );
-  } else if (data === "contacts") {
-    bot.sendMessage(
-      chatId,
-      "\u260E\uFE0F **Contacts**\n\n- Email: [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)\n- Telegram: [@vegog](https://t.me/vegog)",
-      { parse_mode: "Markdown" }
-    );
+  if (!message) return;
+
+  const chatId = message.chat.id;
+  const messageId = message.message_id;
+
+  // Обработчик кнопок
+  switch (data) {
+    case "about":
+      await bot.editMessageText(
+        `
+        🤖 **About the bot**
+
+        This bot is created with paws to:
+        ฅ roll a cat
+        ฅ purr
+        ฅ sleep
+        ฅ ask for food
+        ฅ drive out the devil
+
+        💡 **Technologies:**
+        - Backend: Node.js
+        - Frontend: React
+        - Hosting: Vercel
+        `,
+        {
+          chat_id: chatId,
+          message_id: messageId,
+          parse_mode: "Markdown",
+          reply_markup: JSON.stringify({
+            inline_keyboard: [
+              [
+                { text: "📖 Help", callback_data: "help" },
+                { text: "📞 Contacts", callback_data: "contacts" },
+              ],
+            ],
+          }),
+        }
+      );
+      break;
+
+    case "help":
+      await bot.editMessageText(
+        `
+        📖 **Bot Help**
+
+        Here is a list of available commands:
+        ฅ /start - Easy start
+        ฅ /contacts - Contacts
+        ฅ /about - Description
+        ฅ /help - Help
+        `,
+        {
+          chat_id: chatId,
+          message_id: messageId,
+          parse_mode: "Markdown",
+          reply_markup: JSON.stringify({
+            inline_keyboard: [
+              [
+                { text: "📖 Help", callback_data: "help" },
+                { text: "📞 Contacts", callback_data: "contacts" },
+                { text: "🤖 About", callback_data: "about" },
+              ],
+            ],
+          }),
+        }
+      );
+      break;
+
+    case "contacts":
+      await bot.editMessageText(
+        `
+        📞 **Contacts**
+
+        If you have any questions or suggestions, please contact us:  
+        📧 *E-mail:* [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)
+        📱 *Telegram:* [@vegog](https://t.me/vegog)
+        `,
+        {
+          chat_id: chatId,
+          message_id: messageId,
+          parse_mode: "Markdown",
+          reply_markup: JSON.stringify({
+            inline_keyboard: [
+              [
+                { text: "📖 Help", callback_data: "help" },
+                { text: "🤖 About", callback_data: "about" },
+              ],
+            ],
+          }),
+        }
+      );
+      break;
+
+    default:
+      break;
   }
+
+  // Уведомляем Telegram о завершении обработки
+  bot.answerCallbackQuery(query.id);
 });
+
 
 // Запуск сервера
 const PORT = process.env.PORT || 3000;
