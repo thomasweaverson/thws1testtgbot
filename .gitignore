@@ -3,3 +3,5 @@ node_modules
 tg.bot
 .vercel
 .env
+
+work-test.js

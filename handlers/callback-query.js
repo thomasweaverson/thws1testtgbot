@@ -16,17 +16,17 @@ module.exports = (bot) => {
             `
             🤖 **About the bot**
 
-            This bot was created by paws to:
-            ฅ roll around
-            ฅ purr
-            ฅ sleep
-            ฅ beg for food
-            ฅ go crazy
+  This bot was created by paws to:
+  ฅ roll around
+  ฅ purr
+  ฅ sleep
+  ฅ beg for food
+  ฅ go crazy
 
-            💡 **Technologies:**
-            - Backend: Node.js
-            - Frontend: React
-            - Hosting: Vercel, Render
+  💡 **Technologies:**
+  - Backend: Node.js
+  - Frontend: React
+  - Hosting: Vercel, Render
             `,
             {
               chat_id: chatId,
@@ -41,7 +41,7 @@ module.exports = (bot) => {
           await bot.editMessageText(
             `
             📖 **Bot Help**
-            Just run the app and have purr
+  Just run the app and have purr
             `,
             {
               chat_id: chatId,
@@ -57,9 +57,9 @@ module.exports = (bot) => {
             `
             📞 **Contacts**
 
-            If you have any questions or suggestions, please contact us:  
-            📧 *E-mail:* [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)
-            📱 *Telegram:* [@vegog](https://t.me/vegog)
+  If you have any questions or suggestions, please contact us:  
+  📧 [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)
+  📱 *TG:* [@vegog](https://t.me/vegog)
             `,
             {
               chat_id: chatId,
