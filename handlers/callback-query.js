@@ -1,7 +1,7 @@
-const keyboards = require('../utils/keyboards');
+const keyboards = require("../utils/keyboards");
 
 module.exports = (bot) => {
-  bot.on('callback_query', async (query) => {
+  bot.on("callback_query", async (query) => {
     const { data, message } = query;
 
     if (!message) return;
@@ -11,7 +11,7 @@ module.exports = (bot) => {
 
     try {
       switch (data) {
-        case 'about':
+        case "about":
           await bot.editMessageText(
             `
             🤖 **About the bot**
@@ -25,19 +25,20 @@ module.exports = (bot) => {
 
   💡 **Technologies:**
   - Backend: Node.js
-  - Frontend: React
+  - Frontend: React, TS, TailwindCSS, Axios
   - Hosting: Vercel, Render
+  - Third party api: thecatapi.com
             `,
             {
               chat_id: chatId,
               message_id: messageId,
-              parse_mode: 'Markdown',
+              parse_mode: "Markdown",
               reply_markup: JSON.stringify(keyboards.aboutKeyboard()),
             }
           );
           break;
 
-        case 'help':
+        case "help":
           await bot.editMessageText(
             `
             📖 **Bot Help**
@@ -46,25 +47,27 @@ module.exports = (bot) => {
             {
               chat_id: chatId,
               message_id: messageId,
-              parse_mode: 'Markdown',
+              parse_mode: "Markdown",
               reply_markup: JSON.stringify(keyboards.helpKeyboard()),
             }
           );
           break;
 
-        case 'contacts':
+        case "contacts":
           await bot.editMessageText(
             `
             📞 **Contacts**
 
-  If you have any questions or suggestions, please contact us:  
+  If you have any questions or suggestions, please contact me:  
+
   📧 [thomasweaverson@gmail.com](mailto:thomasweaverson@gmail.com)
+  
   📱 *TG:* [@vegog](https://t.me/vegog)
             `,
             {
               chat_id: chatId,
               message_id: messageId,
-              parse_mode: 'Markdown',
+              parse_mode: "Markdown",
               reply_markup: JSON.stringify(keyboards.contactsKeyboard()),
             }
           );
@@ -72,7 +75,7 @@ module.exports = (bot) => {
 
         default:
           await bot.answerCallbackQuery(query.id, {
-            text: 'Unknown command!',
+            text: "Unknown command!",
             show_alert: true,
           });
           break;
@@ -80,9 +83,9 @@ module.exports = (bot) => {
 
       await bot.answerCallbackQuery(query.id);
     } catch (error) {
-      console.error('Error handling callback query:', error);
+      console.error("Error handling callback query:", error);
       await bot.answerCallbackQuery(query.id, {
-        text: 'Oops! Something went wrong.',
+        text: "Oops! Something went wrong.",
         show_alert: true,
       });
     }
